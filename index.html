@@ -22,11 +22,13 @@
       --color-border: #001a33;
       
       /* Accent Colors */
-      --color-filter: #4CAF50;
+      --color-filter: #c8a882; /* Tan/brown cardboard crutch color */
       --color-ember: #FF4500; /* Bright orange-red */
+      --color-ember-glow: #4CAF50; /* Green glow for ember */
       
       /* Cigarette Colors */
-      --color-paper: #f4f4f4;
+      --color-paper: #fafafa; /* Whiter rolling paper */
+      --color-paper-shadow: rgba(0, 0, 0, 0.15); /* Shadow for paper */
       --color-ash: #444;
       --color-ash-texture: #555;
 
@@ -183,6 +185,7 @@
       background-color: var(--color-ember);
       box-shadow: 0 0 10px 3px var(--color-ember), 
                   0 0 15px 6px #FF8C00,
+                  0 0 20px 8px var(--color-ember-glow),
                   0 0 3px 1px #fff inset;
       z-index: 2;
       flex-shrink: 0;
@@ -195,15 +198,18 @@
       transition: height 0.1s linear;
       order: 3; /* Below ember */
       flex-shrink: 0; /* This will be set by JS */
-      border-left: 2px solid #000;
-      border-right: 2px solid #000;
-      /* Crunchy lines */
+      border-left: 2px solid #ddd;
+      border-right: 2px solid #ddd;
+      /* Subtle shadows for depth */
+      box-shadow: inset 2px 0 4px var(--color-paper-shadow),
+                  inset -2px 0 4px var(--color-paper-shadow);
+      /* Subtle paper texture */
       background-image: repeating-linear-gradient(
-        -30deg,
+        90deg,
         transparent,
-        transparent 4px,
-        rgba(0,0,0,0.1) 4px,
-        rgba(0,0,0,0.1) 5px
+        transparent 2px,
+        rgba(0,0,0,0.02) 2px,
+        rgba(0,0,0,0.02) 3px
       );
     }
 
@@ -213,15 +219,15 @@
       flex-shrink: 0;
       order: 4; /* At the bottom */
       border-top: 3px solid var(--color-border);
-      border-left: 2px solid #000;
-      border-right: 2px solid #000;
-      /* Cork texture */
-      background-image: radial-gradient(circle at 10px 10px, rgba(0,0,0,0.1) 1px, transparent 2px),
-                        radial-gradient(circle at 25px 20px, rgba(0,0,0,0.1) 1px, transparent 2px),
-                        radial-gradient(circle at 40px 30px, rgba(0,0,0,0.1) 1px, transparent 2px),
-                        radial-gradient(circle at 15px 40px, rgba(0,0,0,0.1) 1px, transparent 2px),
-                        radial-gradient(circle at 35px 50px, rgba(0,0,0,0.1) 1px, transparent 2px);
-      background-size: 50px 50px;
+      border-left: 2px solid #a08060;
+      border-right: 2px solid #a08060;
+      /* Cardboard texture */
+      background-image: 
+        linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0,0,0,0.05) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.05) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.05) 75%);
+      background-size: 4px 4px;
     }
     
     /* -------------------------------------
@@ -559,48 +565,58 @@
     </div>
 
     <section class="timeline-step">
-      <h2>The Last Use</h2>
-      <p>Your body and mind begin to recover the moment you quit. Withdrawal may be uncomfortable, but it's temporary. This is the timeline of healing.</p>
+      <h2>1 Hour</h2>
+      <p>Peak THC levels decline as your body metabolizes the cannabinoids. The psychoactive effects begin to wear off.</p>
     </section>
     
     <section class="timeline-step">
-      <h2>After 20 Minutes</h2>
-      <p>Your body is processing the remaining THC. Mental fog begins to lift slightly.</p>
+      <h2>12 Hours</h2>
+      <p>Withdrawal symptoms begin. You may experience irritability, anxiety, and difficulty sleeping as your brain adjusts.</p>
     </section>
     
     <section class="timeline-step">
-      <h2>After 12 Hours</h2>
-      <p>Carbon monoxide (a poison) drops to normal, allowing blood to carry oxygen properly.</p>
+      <h2>24 Hours</h2>
+      <p>Appetite decreases and mood swings may occur as your brain restores natural dopamine production.</p>
     </section>
     
     <section class="timeline-step">
-      <h2>After 48 Hours</h2>
-      <p>Nerve endings regrow. Your sense of smell and taste improve.</p>
+      <h2>2 Days</h2>
+      <p>Withdrawal symptoms peak. This is often the hardest period—irritability, headaches, and sleep problems are most intense.</p>
     </section>
     
     <section class="timeline-step">
-      <h2>After 2 Weeks</h2>
-      <p>Circulation and lung function improve. Exercise becomes easier.</p>
+      <h2>3 Days</h2>
+      <p>Most THC has cleared from your system. Physical withdrawal symptoms begin to subside significantly.</p>
     </section>
     
     <section class="timeline-step">
-      <h2>After 1 Year</h2>
-      <p>Your risk of coronary heart disease is cut in half. A massive milestone.</p>
+      <h2>1 Week</h2>
+      <p>Brain fog lifts. You'll notice improved concentration and clearer thinking as your mind recovers.</p>
     </section>
 
     <section class="timeline-step">
-      <h2>After 5 Years</h2>
-      <p>Stroke risk is reduced to that of a non-marijuana user's as blood vessels heal.</p>
+      <h2>2 Weeks</h2>
+      <p>Your sleep cycle begins normalizing. Anxiety and mood swings decrease as your brain chemistry stabilizes.</p>
     </section>
     
     <section class="timeline-step">
-      <h2>After 10 Years</h2>
-      <p>Your risk of dying from lung cancer is about half that of a person who still smokes.</p>
+      <h2>1 Month</h2>
+      <p>REM sleep is normalized and mood has stabilized. You're starting to feel like yourself again.</p>
     </section>
 
     <section class="timeline-step">
-      <h2>After 15 Years</h2>
-      <p>Your risk of coronary heart disease is now the same as a non-marijuana user's. It's as if you never used marijuana.</p>
+      <h2>3 Months</h2>
+      <p>Memory and learning are significantly improved. Your ability to focus and retain information is much better.</p>
+    </section>
+
+    <section class="timeline-step">
+      <h2>6 Months</h2>
+      <p>Cognitive abilities are largely recovered. Your mental processing speed and clarity are nearly back to baseline.</p>
+    </section>
+
+    <section class="timeline-step">
+      <h2>1 Year</h2>
+      <p>Your brain has substantially healed. Full mental clarity is restored—it's like getting your mind back.</p>
     </section>
 
     <!-- CTA Section -->
@@ -755,15 +771,17 @@
     */
     
     const iconSets = {
-      'The Last Puff': ['🚭', '💪', '🎯'],
-      'After 20 Minutes': ['❤️', '💓', '🫀'],
-      'After 12 Hours': ['🫁', '💨', '🌬️'],
-      'After 48 Hours': ['👃', '👅', '🌸'],
-      'After 2 Weeks': ['🏃', '💪', '🚴'],
-      'After 1 Year': ['🎉', '💖', '⭐'],
-      'After 5 Years': ['🧠', '🩺', '✨'],
-      'After 10 Years': ['🫁', '🎊', '🌟'],
-      'After 15 Years': ['🎈', '💯', '🏆']
+      '1 Hour': ['🌿', '�', '🧠'],
+      '12 Hours': ['😰', '�', '😴'],
+      '24 Hours': ['🍽️', '�', '💪'],
+      '2 Days': ['🤯', '�', '�'],
+      '3 Days': ['✨', '�', '💚'],
+      '1 Week': ['🧠', '💡', '🎯'],
+      '2 Weeks': ['😴', '�', '🌙'],
+      '1 Month': ['😊', '�', '🎉'],
+      '3 Months': ['📚', '�', '🎓'],
+      '6 Months': ['⚡', '🚀', '💯'],
+      '1 Year': ['�', '🌟', '✨']
     };
     
     function addFloatingIcons(section) {
