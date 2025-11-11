@@ -163,6 +163,8 @@
       height: 100%;
       display: flex;
       flex-direction: column;
+      /* Apply taper to entire joint container */
+      clip-path: polygon(5% 0%, 95% 0%, 75% 100%, 25% 100%);
     }
     
     .ash {
@@ -178,8 +180,8 @@
       order: 1; /* At the top */
       border-left: 2px solid #111;
       border-right: 2px solid #111;
-      /* Subtle taper - more similar to paper */
-      clip-path: polygon(5% 0%, 95% 0%, 75% 100%, 25% 100%);
+      /* NO taper - inherit the joint's natural taper */
+      clip-path: none;
     }
     
     .ember {
@@ -192,8 +194,8 @@
       z-index: 2;
       flex-shrink: 0;
       order: 2; /* Below ash */
-      /* Match ash taper */
-      clip-path: polygon(5% 0%, 95% 0%, 75% 100%, 25% 100%);
+      /* NO taper - inherit the joint's natural taper */
+      clip-path: none;
       border-left: 1px solid #FF2000;
       border-right: 1px solid #FF2000;
     }
@@ -209,8 +211,8 @@
       /* Subtle shadows for depth */
       box-shadow: inset 3px 0 6px var(--color-paper-shadow),
                   inset -3px 0 6px var(--color-paper-shadow);
-      /* Subtle taper matching ash */
-      clip-path: polygon(5% 0%, 95% 0%, 75% 100%, 25% 100%);
+      /* NO taper - this stays rectangular, the joint-visual container provides the taper */
+      clip-path: none;
       /* Rolling paper lines - diagonal wrapping effect */
       background-image: 
         repeating-linear-gradient(
@@ -468,17 +470,21 @@
       
       .joint {
         height: 100%;
-        /* Remove borders from inner elements on desktop */
       }
       
       .ash {
-        /* Ash still grows */
         border-left: none;
         border-right: none;
       }
 
       .ember {
-        /* Ember still fixed 5px height */
+        /* Enhanced glow effect for desktop */
+        box-shadow: 0 0 20px 8px var(--color-ember), 
+                    0 0 30px 12px #FF8C00,
+                    0 0 40px 16px var(--color-ember-glow),
+                    0 0 6px 4px #fff inset;
+        border-left: none;
+        border-right: none;
       }
       
       .paper {
@@ -881,7 +887,10 @@
         if (this.currentopacity <= 0) {
           this.currentopacity = 1;
           this.x = smokeCanvasWidth / 2;
-          this.y = 10; // Start from top of canvas (where ember is)
+          // Get current ash height to position smoke at top of ash
+          const ashElement = document.querySelector('.ash');
+          const ashHeight = ashElement ? parseFloat(ashElement.style.height) || 0 : 0;
+          this.y = ashHeight; // Start from top of ash
           this.rotation = generateRandomSmoke(0, Math.PI * 2);
           this.radius = 25;
         }
@@ -914,7 +923,10 @@
 
     function addSmokeParticle(ctx) {
       var particle = new SmokeParticle(ctx);
-      particle.setPosition(smokeCanvasWidth / 2, 10); // Start from top
+      // Get current ash height to position smoke at top of ash
+      const ashElement = document.querySelector('.ash');
+      const ashHeight = ashElement ? parseFloat(ashElement.style.height) || 0 : 0;
+      particle.setPosition(smokeCanvasWidth / 2, ashHeight); // Start from top of ash
       particle.setRotation(generateRandomSmoke(0, Math.PI * 2));
       particle.setVelocity(generateRandomSmoke(-.1, .1), -0.8);
       particle.setImage(smokeImg);
