@@ -141,7 +141,7 @@
       position: sticky;
       top: 0;
       left: 0;
-      width: 50px;
+      width: 60px;
       height: 100vh;
       display: flex;
       z-index: 10;
@@ -178,18 +178,22 @@
       order: 1; /* At the top */
       border-left: 2px solid #222;
       border-right: 2px solid #222;
+      /* Taper effect - narrower at top */
+      clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
     }
     
     .ember {
-      height: 5px; /* Fixed height for the glowing tip */
-      background-color: var(--color-ember);
-      box-shadow: 0 0 10px 3px var(--color-ember), 
-                  0 0 15px 6px #FF8C00,
-                  0 0 20px 8px var(--color-ember-glow),
-                  0 0 3px 1px #fff inset;
+      height: 8px; /* Slightly taller for more visibility */
+      background: linear-gradient(to bottom, var(--color-ember), #FF6347);
+      box-shadow: 0 0 12px 4px var(--color-ember), 
+                  0 0 18px 7px #FF8C00,
+                  0 0 25px 10px var(--color-ember-glow),
+                  0 0 4px 2px #fff inset;
       z-index: 2;
       flex-shrink: 0;
       order: 2; /* Below ash */
+      /* Taper to match ash */
+      clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
     }
 
     .paper {
@@ -198,36 +202,59 @@
       transition: height 0.1s linear;
       order: 3; /* Below ember */
       flex-shrink: 0; /* This will be set by JS */
-      border-left: 2px solid #ddd;
-      border-right: 2px solid #ddd;
+      border-left: 2px solid #e8e8e8;
+      border-right: 2px solid #e8e8e8;
       /* Subtle shadows for depth */
-      box-shadow: inset 2px 0 4px var(--color-paper-shadow),
-                  inset -2px 0 4px var(--color-paper-shadow);
-      /* Subtle paper texture */
-      background-image: repeating-linear-gradient(
-        90deg,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.02) 2px,
-        rgba(0,0,0,0.02) 3px
-      );
+      box-shadow: inset 3px 0 6px var(--color-paper-shadow),
+                  inset -3px 0 6px var(--color-paper-shadow);
+      /* Conical taper - wider at bottom */
+      clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+      /* Subtle paper texture and rolling lines */
+      background-image: 
+        repeating-linear-gradient(
+          90deg,
+          transparent,
+          transparent 2px,
+          rgba(0,0,0,0.02) 2px,
+          rgba(0,0,0,0.02) 3px
+        ),
+        linear-gradient(
+          135deg,
+          rgba(200, 180, 150, 0.08) 0%,
+          transparent 30%,
+          transparent 70%,
+          rgba(200, 180, 150, 0.08) 100%
+        );
     }
 
     .filter {
-      height: 100px; /* Fixed height */
-      background-color: var(--color-filter);
+      height: 120px; /* Taller, more prominent crutch */
+      background: linear-gradient(to bottom, #d4b896 0%, #c8a882 50%, #b89968 100%);
       flex-shrink: 0;
       order: 4; /* At the bottom */
-      border-top: 3px solid var(--color-border);
+      border-top: 3px solid #8d7555;
       border-left: 2px solid #a08060;
       border-right: 2px solid #a08060;
-      /* Cardboard texture */
+      border-bottom: 2px solid #7a6040;
+      /* Rounded bottom edges */
+      border-bottom-left-radius: 4px;
+      border-bottom-right-radius: 4px;
+      /* Cardboard texture with ridges */
       background-image: 
-        linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(0,0,0,0.05) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.05) 75%),
-        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.05) 75%);
-      background-size: 4px 4px;
+        repeating-linear-gradient(
+          0deg,
+          rgba(0,0,0,0.08) 0px,
+          transparent 1px,
+          transparent 3px,
+          rgba(0,0,0,0.08) 4px
+        ),
+        linear-gradient(45deg, rgba(0,0,0,0.03) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0,0,0,0.03) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.03) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.03) 75%);
+      background-size: 100% 100%, 4px 4px, 4px 4px, 4px 4px, 4px 4px;
+      /* Subtle shadow at top to show depth */
+      box-shadow: inset 0 4px 8px rgba(0,0,0,0.15);
     }
     
     /* -------------------------------------
@@ -448,11 +475,11 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        width: 50px;
-        height: 400px; /* Fixed height for desktop */
+        width: 70px;
+        height: 450px; /* Fixed height for desktop */
         background-color: transparent; /* No bg, just the .joint */
-        border: 3px solid var(--color-border);
-        box-shadow: 8px 8px 0px #000; 
+        border: none; /* Remove border for cleaner look */
+        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3); 
       }
       
       .joint {
@@ -471,16 +498,16 @@
       }
       
       .paper {
-        height: 315px; /* 400 - 80(filter) - 5(ember) */
+        height: 322px; /* 450 - 100(filter) - 8(ember) - 20(buffer) */
         border-left: none;
         border-right: none;
       }
 
       .filter {
-        height: 80px; /* Shorter filter for desktop */
+        height: 100px; /* Shorter filter for desktop */
         border-left: none;
         border-right: none;
-        border-top: 3px solid var(--color-border);
+        border-top: 3px solid #8d7555;
       }
       
       .timeline-content {
@@ -636,11 +663,11 @@
     */
     
     // Static CSS heights
-    const MOBILE_FILTER_CSS_HEIGHT = 100;
-    const MOBILE_EMBER_CSS_HEIGHT = 5;
-    const DESKTOP_CIGARETTE_CSS_HEIGHT = 400; // From media query
-    const DESKTOP_FILTER_CSS_HEIGHT = 80;    // From media query
-    const DESKTOP_EMBER_CSS_HEIGHT = 5;     // From media query
+    const MOBILE_FILTER_CSS_HEIGHT = 120;
+    const MOBILE_EMBER_CSS_HEIGHT = 8;
+    const DESKTOP_CIGARETTE_CSS_HEIGHT = 450; // From media query
+    const DESKTOP_FILTER_CSS_HEIGHT = 100;    // From media query
+    const DESKTOP_EMBER_CSS_HEIGHT = 8;     // From media query
     
     // Get elements
     const paper = document.querySelector('.paper');
