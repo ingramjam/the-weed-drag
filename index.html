@@ -86,19 +86,19 @@
     
     @keyframes waveMotion1 {
       0% { transform: translate(0, var(--scroll-offset)); }
-      50% { transform: translate(-5%, var(--scroll-offset)); }
+      50% { transform: translate(-3%, var(--scroll-offset)); }
       100% { transform: translate(0, var(--scroll-offset)); }
     }
     
     @keyframes waveMotion2 {
       0% { transform: translate(0, var(--scroll-offset)); }
-      50% { transform: translate(5%, var(--scroll-offset)); }
+      50% { transform: translate(4%, var(--scroll-offset)); }
       100% { transform: translate(0, var(--scroll-offset)); }
     }
     
     @keyframes waveMotion3 {
       0% { transform: translate(0, var(--scroll-offset)); }
-      50% { transform: translate(-3%, var(--scroll-offset)); }
+      50% { transform: translate(-2%, var(--scroll-offset)); }
       100% { transform: translate(0, var(--scroll-offset)); }
     }
     
@@ -136,6 +136,7 @@
       height: 100%;
       left: -50%;
       --scroll-offset: 0;
+      will-change: transform;
     }
     
     .wave-layer svg {
@@ -144,22 +145,22 @@
     }
     
     .wave-layer-1 {
-      top: 0%;
+      bottom: 0;
       opacity: 1;
-      animation: waveMotion1 25s ease-in-out infinite;
+      animation: waveMotion1 20s ease-in-out infinite;
     }
     
     .wave-layer-2 {
-      top: 0%;
+      bottom: 0;
       opacity: 1;
-      animation: waveMotion2 30s ease-in-out infinite;
+      animation: waveMotion2 25s ease-in-out infinite;
       animation-delay: -5s;
     }
     
     .wave-layer-3 {
-      top: 0%;
+      bottom: 0;
       opacity: 1;
-      animation: waveMotion3 35s ease-in-out infinite;
+      animation: waveMotion3 30s ease-in-out infinite;
       animation-delay: -10s;
     }
     
@@ -620,20 +621,20 @@
   <div class="parallax-bg">
     <!-- Bottom wave -->
     <div class="wave-layer wave-layer-1">
-      <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
-        <path d="M0,500 C300,450 700,550 1000,520 C1150,500 1200,550 1200,550 L1200,800 L0,800 Z" fill="#303132" opacity="0.56"/>
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path d="M0,160 C320,200,420,100,720,140 C1020,180,1120,240,1440,200 L1440,320 L0,320 Z" fill="#1a2332" opacity="0.8"/>
       </svg>
     </div>
-    <!-- Middle wave (flipped horizontally) -->
+    <!-- Middle wave -->
     <div class="wave-layer wave-layer-2">
-      <svg viewBox="0 0 1200 800" preserveAspectRatio="none" style="transform: scaleX(-1);">
-        <path d="M0,250 C400,200 600,350 900,300 C1100,270 1200,350 1200,350 L1200,550 L0,550 Z" fill="#303132" opacity="0.56"/>
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path d="M0,120 C360,160,540,80,840,120 C1140,160,1320,100,1440,140 L1440,320 L0,320 Z" fill="#15202e" opacity="0.6"/>
       </svg>
     </div>
-    <!-- Top wave (flipped vertically) -->
+    <!-- Top wave -->
     <div class="wave-layer wave-layer-3">
-      <svg viewBox="0 0 1200 800" preserveAspectRatio="none" style="transform: scaleY(-1);">
-        <path d="M0,0 C300,50 500,0 800,50 C1100,100 1200,50 1200,50 L1200,300 L0,300 Z" fill="#303132" opacity="0.56"/>
+      <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+        <path d="M0,80 C400,120,600,40,900,80 C1200,120,1300,60,1440,100 L1440,320 L0,320 Z" fill="#0f1a26" opacity="0.4"/>
       </svg>
     </div>
   </div>
@@ -644,7 +645,7 @@
 
   <div class="joint-visual">
     <!-- Smoke Particles Canvas - positioned at top to come from ember -->
-    <canvas id="smokeCanvas" style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 400px; height: 100vh; pointer-events: none; z-index: 15; opacity: 0.8;"></canvas>
+    <canvas id="smokeCanvas" style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 400px; height: 100vh; pointer-events: none; z-index: 15; opacity: 0.8; transition: opacity 0.3s ease;"></canvas>
     <!-- Pure CSS joint -->
     <div class="joint">
       <div class="ash"></div>
@@ -745,18 +746,10 @@
       const waveLayers = document.querySelectorAll('.wave-layer');
       
       waveLayers.forEach((layer, index) => {
-        // Move waves apart as you scroll using CSS custom property
-        if (index === 2) {
-          // Top wave (wave-layer-3) - moves UP as you scroll down
-          const speed = 30;
-          const yPos = -(scrollPercent * speed);
-          layer.style.setProperty('--scroll-offset', `${yPos}vh`);
-        } else {
-          // Bottom and middle waves - move DOWN as you scroll
-          const speed = (index + 1) * 30;
-          const yPos = scrollPercent * speed;
-          layer.style.setProperty('--scroll-offset', `${yPos}vh`);
-        }
+        // All waves move down as you scroll for depth effect
+        const speed = (index + 1) * 15; // Reduced speed for subtler effect
+        const yPos = scrollPercent * speed;
+        layer.style.setProperty('--scroll-offset', `${yPos}vh`);
       });
       
       // Trigger animation update by forcing reflow
@@ -828,6 +821,7 @@
       const jointVisual = document.querySelector('.joint-visual');
       const jointRect = jointVisual.getBoundingClientRect();
       const ctaRect = ctaSection.getBoundingClientRect();
+      const smokeCanvas = document.getElementById('smokeCanvas');
       
       // Check if CTA overlaps with joint
       const isOverlapping = !(ctaRect.right < jointRect.left || 
@@ -838,9 +832,11 @@
       if (isOverlapping) {
         jointVisual.style.opacity = '0.3';
         jointVisual.style.filter = 'brightness(0.5)';
+        smokeCanvas.style.opacity = '0'; // Hide smoke when CTA overlaps
       } else {
         jointVisual.style.opacity = '1';
         jointVisual.style.filter = 'brightness(1)';
+        smokeCanvas.style.opacity = '0.8'; // Show smoke normally
       }
 
       /* 5. Ember Following is now automatic via CSS flex order */
