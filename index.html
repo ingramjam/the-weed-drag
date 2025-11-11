@@ -107,7 +107,7 @@
       left: 0;
       width: 100%;
       height: 100vh;
-      z-index: 0;
+      z-index: -1;
       pointer-events: none;
       overflow: hidden;
     }
@@ -592,19 +592,22 @@
 
   <!-- Parallax Background Waves -->
   <div class="parallax-bg">
+    <!-- Bottom wave -->
     <div class="wave-layer wave-layer-1">
       <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
-        <path d="M0,300 C300,200 500,400 800,350 C1100,300 1200,400 1200,400 L1200,800 L0,800 Z" fill="#303132" opacity="0.56"/>
+        <path d="M0,500 C300,450 700,550 1000,520 C1150,500 1200,550 1200,550 L1200,800 L0,800 Z" fill="#303132" opacity="0.56"/>
       </svg>
     </div>
+    <!-- Middle wave -->
     <div class="wave-layer wave-layer-2">
       <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
-        <path d="M0,400 C400,300 600,500 900,450 C1100,420 1200,500 1200,500 L1200,800 L0,800 Z" fill="#303132" opacity="0.56"/>
+        <path d="M0,250 C400,200 600,350 900,300 C1100,270 1200,350 1200,350 L1200,550 L0,550 Z" fill="#303132" opacity="0.56"/>
       </svg>
     </div>
+    <!-- Top wave -->
     <div class="wave-layer wave-layer-3">
       <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
-        <path d="M0,500 C300,450 700,550 1000,520 C1150,500 1200,550 1200,550 L1200,800 L0,800 Z" fill="#303132" opacity="0.56"/>
+        <path d="M0,0 C300,50 500,0 800,50 C1100,100 1200,50 1200,50 L1200,300 L0,300 Z" fill="#303132" opacity="0.56"/>
       </svg>
     </div>
   </div>
