@@ -318,6 +318,8 @@
       width: auto;
       /* Adjusted padding for alignment */
       padding: 20px 10% 20px 20px;
+      position: relative;
+      z-index: 1;
     }
     
     /* Infographic Title Style */
@@ -628,9 +630,9 @@
         <path d="M0,250 C400,200 600,350 900,300 C1100,270 1200,350 1200,350 L1200,550 L0,550 Z" fill="#303132" opacity="0.56"/>
       </svg>
     </div>
-    <!-- Top wave -->
+    <!-- Top wave (flipped vertically) -->
     <div class="wave-layer wave-layer-3">
-      <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="none" style="transform: scaleY(-1);">
         <path d="M0,0 C300,50 500,0 800,50 C1100,100 1200,50 1200,50 L1200,300 L0,300 Z" fill="#303132" opacity="0.56"/>
       </svg>
     </div>
@@ -908,7 +910,7 @@
     */
     
     const iconSets = {
-      '1 Hour': ['🌿', '�', '🧠'],
+      '1 Hour': ['🌿', '💭', '🧠'],
       '12 Hours': ['😰', '😟', '😴'],
       '24 Hours': ['🍽', '😔', '💪'],
       '2 Days': ['😖', '😣', '💢'],
