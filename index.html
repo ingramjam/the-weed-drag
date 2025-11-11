@@ -114,25 +114,29 @@
     
     .wave-layer {
       position: absolute;
-      width: 150%;
+      width: 200%;
       height: 100%;
-      left: -25%;
-      opacity: 0.15;
+      left: -50%;
+    }
+    
+    .wave-layer svg {
+      width: 100%;
+      height: 100%;
     }
     
     .wave-layer-1 {
-      background: radial-gradient(ellipse at 50% 50%, rgba(76, 175, 80, 0.3) 0%, transparent 70%);
-      top: -20%;
+      top: 10%;
+      opacity: 0.08;
     }
     
     .wave-layer-2 {
-      background: radial-gradient(ellipse at 30% 60%, rgba(76, 175, 80, 0.2) 0%, transparent 70%);
-      top: -10%;
+      top: 20%;
+      opacity: 0.06;
     }
     
     .wave-layer-3 {
-      background: radial-gradient(ellipse at 70% 40%, rgba(76, 175, 80, 0.25) 0%, transparent 70%);
-      top: 0%;
+      top: 30%;
+      opacity: 0.05;
     }
     
     /* -------------------------------------
@@ -588,9 +592,21 @@
 
   <!-- Parallax Background Waves -->
   <div class="parallax-bg">
-    <div class="wave-layer wave-layer-1"></div>
-    <div class="wave-layer wave-layer-2"></div>
-    <div class="wave-layer wave-layer-3"></div>
+    <div class="wave-layer wave-layer-1">
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
+        <path d="M0,300 C300,200 500,400 800,350 C1100,300 1200,400 1200,400 L1200,800 L0,800 Z" fill="#1a3a3a" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="wave-layer wave-layer-2">
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
+        <path d="M0,400 C400,300 600,500 900,450 C1100,420 1200,500 1200,500 L1200,800 L0,800 Z" fill="#2a4a4a" opacity="0.3"/>
+      </svg>
+    </div>
+    <div class="wave-layer wave-layer-3">
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
+        <path d="M0,500 C300,450 700,550 1000,520 C1150,500 1200,550 1200,550 L1200,800 L0,800 Z" fill="#3a5a5a" opacity="0.3"/>
+      </svg>
+    </div>
   </div>
 
   <!-- Smokey Overlays -->
