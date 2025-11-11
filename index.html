@@ -167,33 +167,35 @@
     
     .ash {
       height: 0; /* Starts at 0, grows upwards */
-      background-color: var(--color-ash);
-      background-image: linear-gradient(45deg, var(--color-ash-texture) 25%, transparent 25%),
-                        linear-gradient(-45deg, var(--color-ash-texture) 25%, transparent 25%),
-                        linear-gradient(45deg, transparent 75%, var(--color-ash-texture) 75%),
-                        linear-gradient(-45deg, transparent 75%, var(--color-ash-texture) 75%);
+      background-color: #333; /* Darker ash for better contrast */
+      background-image: linear-gradient(45deg, #555 25%, transparent 25%),
+                        linear-gradient(-45deg, #555 25%, transparent 25%),
+                        linear-gradient(45deg, transparent 75%, #555 75%),
+                        linear-gradient(-45deg, transparent 75%, #555 75%);
       background-size: 10px 10px;
       transition: height 0.1s linear;
       flex-shrink: 0;
       order: 1; /* At the top */
-      border-left: 2px solid #222;
-      border-right: 2px solid #222;
+      border-left: 2px solid #111;
+      border-right: 2px solid #111;
       /* Subtle taper - more similar to paper */
       clip-path: polygon(5% 0%, 95% 0%, 75% 100%, 25% 100%);
     }
     
     .ember {
-      height: 8px; /* Slightly taller for more visibility */
-      background: linear-gradient(to bottom, var(--color-ember), #FF6347);
-      box-shadow: 0 0 12px 4px var(--color-ember), 
-                  0 0 18px 7px #FF8C00,
-                  0 0 25px 10px var(--color-ember-glow),
-                  0 0 4px 2px #fff inset;
+      height: 10px; /* Taller for better visibility */
+      background: linear-gradient(to bottom, #FF4500, #FF6347);
+      box-shadow: 0 0 15px 5px var(--color-ember), 
+                  0 0 20px 8px #FF8C00,
+                  0 0 30px 12px var(--color-ember-glow),
+                  0 0 5px 3px #fff inset;
       z-index: 2;
       flex-shrink: 0;
       order: 2; /* Below ash */
       /* Match ash taper */
       clip-path: polygon(5% 0%, 95% 0%, 75% 100%, 25% 100%);
+      border-left: 1px solid #FF2000;
+      border-right: 1px solid #FF2000;
     }
 
     .paper {
@@ -209,8 +211,15 @@
                   inset -3px 0 6px var(--color-paper-shadow);
       /* Subtle taper matching ash */
       clip-path: polygon(5% 0%, 95% 0%, 75% 100%, 25% 100%);
-      /* Subtle paper texture and rolling lines */
+      /* Rolling paper lines - diagonal wrapping effect */
       background-image: 
+        repeating-linear-gradient(
+          -25deg,
+          transparent,
+          transparent 8px,
+          rgba(0,0,0,0.08) 8px,
+          rgba(0,0,0,0.08) 9px
+        ),
         repeating-linear-gradient(
           90deg,
           transparent,
@@ -220,10 +229,10 @@
         ),
         linear-gradient(
           135deg,
-          rgba(200, 180, 150, 0.08) 0%,
+          rgba(200, 180, 150, 0.1) 0%,
           transparent 30%,
           transparent 70%,
-          rgba(200, 180, 150, 0.08) 100%
+          rgba(200, 180, 150, 0.1) 100%
         );
     }
 
@@ -473,7 +482,7 @@
       }
       
       .paper {
-        height: 442px; /* 450 - 0(filter) - 8(ember) */
+        height: 440px; /* 450 - 0(filter) - 10(ember) */
         border-left: none;
         border-right: none;
       }
@@ -539,7 +548,7 @@
 
   <div class="joint-visual">
     <!-- Smoke Particles Canvas - positioned at top to come from ember -->
-    <canvas id="smokeCanvas" style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 400px; height: 100vh; pointer-events: none; z-index: 15; opacity: 0.5;"></canvas>
+    <canvas id="smokeCanvas" style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 400px; height: 100vh; pointer-events: none; z-index: 15; opacity: 0.8;"></canvas>
     <!-- Pure CSS joint -->
     <div class="joint">
       <div class="ash"></div>
@@ -636,10 +645,10 @@
     
     // Static CSS heights
     const MOBILE_FILTER_CSS_HEIGHT = 0;
-    const MOBILE_EMBER_CSS_HEIGHT = 8;
+    const MOBILE_EMBER_CSS_HEIGHT = 10;
     const DESKTOP_CIGARETTE_CSS_HEIGHT = 450; // From media query
     const DESKTOP_FILTER_CSS_HEIGHT = 0;    // From media query
-    const DESKTOP_EMBER_CSS_HEIGHT = 8;     // From media query
+    const DESKTOP_EMBER_CSS_HEIGHT = 10;     // From media query
     
     // Get elements
     const paper = document.querySelector('.paper');
@@ -770,17 +779,17 @@
     */
     
     const iconSets = {
-      '1 Hour': ['🌿', '�', '🧠'],
-      '12 Hours': ['😰', '�', '😴'],
-      '24 Hours': ['🍽️', '�', '💪'],
-      '2 Days': ['🤯', '�', '�'],
-      '3 Days': ['✨', '�', '💚'],
+      '1 Hour': ['�', '💨', '🧠'],
+      '12 Hours': ['😰', '😤', '😴'],
+      '24 Hours': ['🍽️', '😔', '💪'],
+      '2 Days': ['🤯', '😣', '💢'],
+      '3 Days': ['✨', '🌱', '💚'],
       '1 Week': ['🧠', '💡', '🎯'],
-      '2 Weeks': ['😴', '�', '🌙'],
-      '1 Month': ['😊', '�', '🎉'],
-      '3 Months': ['📚', '�', '🎓'],
+      '2 Weeks': ['😴', '😌', '🌙'],
+      '1 Month': ['😊', '💤', '🎉'],
+      '3 Months': ['📚', '🧩', '🎓'],
       '6 Months': ['⚡', '🚀', '💯'],
-      '1 Year': ['�', '🌟', '✨']
+      '1 Year': ['🏆', '🌟', '✨']
     };
     
     function addFloatingIcons(section) {
