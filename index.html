@@ -207,7 +207,7 @@
       /* Subtle shadows for depth */
       box-shadow: inset 3px 0 6px var(--color-paper-shadow),
                   inset -3px 0 6px var(--color-paper-shadow);
-      /* Conical taper - wider at top, narrower at bottom */
+      /* Same taper as ash - wider at top, narrower at bottom */
       clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 30% 100%);
       /* Subtle paper texture and rolling lines */
       background-image: 
@@ -228,33 +228,8 @@
     }
 
     .filter {
-      height: 120px; /* Taller, more prominent crutch */
-      background: linear-gradient(to bottom, #5cb85c 0%, #4CAF50 50%, #45a049 100%);
-      flex-shrink: 0;
-      order: 4; /* At the bottom */
-      border-top: 3px solid #3d8b40;
-      border-left: 2px solid #45a049;
-      border-right: 2px solid #45a049;
-      border-bottom: 2px solid #2e7d32;
-      /* Rounded bottom edges */
-      border-bottom-left-radius: 4px;
-      border-bottom-right-radius: 4px;
-      /* Filter tip texture */
-      background-image: 
-        repeating-linear-gradient(
-          0deg,
-          rgba(0,0,0,0.08) 0px,
-          transparent 1px,
-          transparent 3px,
-          rgba(0,0,0,0.08) 4px
-        ),
-        linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(0,0,0,0.05) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.05) 75%),
-        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.05) 75%);
-      background-size: 100% 100%, 4px 4px, 4px 4px, 4px 4px, 4px 4px;
-      /* Subtle shadow at top to show depth */
-      box-shadow: inset 0 4px 8px rgba(0,0,0,0.15);
+      height: 0px; /* Remove filter */
+      display: none; /* Hide filter completely */
     }
     
     /* -------------------------------------
@@ -498,16 +473,14 @@
       }
       
       .paper {
-        height: 322px; /* 450 - 100(filter) - 8(ember) - 20(buffer) */
+        height: 442px; /* 450 - 0(filter) - 8(ember) */
         border-left: none;
         border-right: none;
       }
 
       .filter {
-        height: 100px; /* Shorter filter for desktop */
-        border-left: none;
-        border-right: none;
-        border-top: 3px solid #3d8b40;
+        height: 0px; /* No filter for desktop */
+        display: none;
       }
       
       .timeline-content {
@@ -572,10 +545,9 @@
       <div class="paper"></div>
       <div class="filter"></div>
     </div>
+    <!-- Smoke Particles Canvas - now inside joint-visual to move with it -->
+    <canvas id="smokeCanvas" style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 400px; height: 100vh; pointer-events: none; z-index: 5; opacity: 0.5;"></canvas>
   </div>
-
-    <!-- Smoke Particles Canvas -->
-    <canvas id="smokeCanvas" style="position: fixed; left: 50%; top: 50%; transform: translate(-50%, -50%); width: 400px; height: 100vh; pointer-events: none; z-index: 5; opacity: 0.5;"></canvas>
 
   <div class="timeline-content">
     
@@ -663,10 +635,10 @@
     */
     
     // Static CSS heights
-    const MOBILE_FILTER_CSS_HEIGHT = 120;
+    const MOBILE_FILTER_CSS_HEIGHT = 0;
     const MOBILE_EMBER_CSS_HEIGHT = 8;
     const DESKTOP_CIGARETTE_CSS_HEIGHT = 450; // From media query
-    const DESKTOP_FILTER_CSS_HEIGHT = 100;    // From media query
+    const DESKTOP_FILTER_CSS_HEIGHT = 0;    // From media query
     const DESKTOP_EMBER_CSS_HEIGHT = 8;     // From media query
     
     // Get elements
