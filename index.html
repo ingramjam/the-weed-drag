@@ -98,7 +98,45 @@
     }
     
     /* -------------------------------------
-      2. SMOKEY BORDERS
+      2. PARALLAX WAVE BACKGROUND
+      -------------------------------------
+    */
+    .parallax-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100vh;
+      z-index: 0;
+      pointer-events: none;
+      overflow: hidden;
+    }
+    
+    .wave-layer {
+      position: absolute;
+      width: 150%;
+      height: 100%;
+      left: -25%;
+      opacity: 0.15;
+    }
+    
+    .wave-layer-1 {
+      background: radial-gradient(ellipse at 50% 50%, rgba(76, 175, 80, 0.3) 0%, transparent 70%);
+      top: -20%;
+    }
+    
+    .wave-layer-2 {
+      background: radial-gradient(ellipse at 30% 60%, rgba(76, 175, 80, 0.2) 0%, transparent 70%);
+      top: -10%;
+    }
+    
+    .wave-layer-3 {
+      background: radial-gradient(ellipse at 70% 40%, rgba(76, 175, 80, 0.25) 0%, transparent 70%);
+      top: 0%;
+    }
+    
+    /* -------------------------------------
+      3. SMOKEY BORDERS
       -------------------------------------
     */
     .smoke-overlay {
@@ -133,7 +171,7 @@
     }
     
     /* -------------------------------------
-      3. CIGARETTE STYLES (CRUNCHY CSS)
+      4. CIGARETTE STYLES (CRUNCHY CSS)
       -------------------------------------
     */
     
@@ -548,6 +586,13 @@
 </head>
 <body>
 
+  <!-- Parallax Background Waves -->
+  <div class="parallax-bg">
+    <div class="wave-layer wave-layer-1"></div>
+    <div class="wave-layer wave-layer-2"></div>
+    <div class="wave-layer wave-layer-3"></div>
+  </div>
+
   <!-- Smokey Overlays -->
   <div class="smoke-overlay smoke-top"></div>
   <div class="smoke-overlay smoke-bottom"></div>
@@ -645,7 +690,24 @@
 
   <script>
     /* -------------------------------------
-      7. JAVASCRIPT SCROLL "BRAIN" & SMOKE EFFECT
+      7. PARALLAX WAVE EFFECT
+      -------------------------------------
+    */
+    function updateParallax() {
+      const scrolled = window.scrollY;
+      const waveLayers = document.querySelectorAll('.wave-layer');
+      
+      waveLayers.forEach((layer, index) => {
+        const speed = (index + 1) * 0.05;
+        const yPos = -(scrolled * speed);
+        layer.style.transform = `translate3d(0, ${yPos}px, 0)`;
+      });
+    }
+    
+    window.addEventListener('scroll', updateParallax);
+    
+    /* -------------------------------------
+      8. JAVASCRIPT SCROLL "BRAIN" & SMOKE EFFECT
       -------------------------------------
     */
     
@@ -746,7 +808,7 @@
     
     
     /* -------------------------------------
-      8. JAVASCRIPT FADE-IN "EYES"
+      9. JAVASCRIPT FADE-IN "EYES"
       -------------------------------------
     */
     
@@ -780,15 +842,15 @@
     });
     
     /* -------------------------------------
-      9. FLOATING ICONS FOR TIMELINE SECTIONS
+      10. FLOATING ICONS FOR TIMELINE SECTIONS
       -------------------------------------
     */
     
     const iconSets = {
-      '1 Hour': ['�', '💨', '🧠'],
-      '12 Hours': ['😰', '😤', '😴'],
-      '24 Hours': ['🍽️', '😔', '💪'],
-      '2 Days': ['🤯', '😣', '💢'],
+      '1 Hour': ['🌿', '😶‍🌫️', '🧠'],
+      '12 Hours': ['😰', '�', '😴'],
+      '24 Hours': ['🍽', '😔', '💪'],
+      '2 Days': ['😖', '😣', '💢'],
       '3 Days': ['✨', '🌱', '💚'],
       '1 Week': ['🧠', '💡', '🎯'],
       '2 Weeks': ['😴', '😌', '🌙'],
