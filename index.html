@@ -178,8 +178,8 @@
       order: 1; /* At the top */
       border-left: 2px solid #222;
       border-right: 2px solid #222;
-      /* Taper effect - wider at top (lit end) */
-      clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 30% 100%);
+      /* Subtle taper - more similar to paper */
+      clip-path: polygon(5% 0%, 95% 0%, 75% 100%, 25% 100%);
     }
     
     .ember {
@@ -192,8 +192,8 @@
       z-index: 2;
       flex-shrink: 0;
       order: 2; /* Below ash */
-      /* Taper to match ash - wider at top */
-      clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 30% 100%);
+      /* Match ash taper */
+      clip-path: polygon(5% 0%, 95% 0%, 75% 100%, 25% 100%);
     }
 
     .paper {
@@ -207,8 +207,8 @@
       /* Subtle shadows for depth */
       box-shadow: inset 3px 0 6px var(--color-paper-shadow),
                   inset -3px 0 6px var(--color-paper-shadow);
-      /* Same taper as ash - wider at top, narrower at bottom */
-      clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 30% 100%);
+      /* Subtle taper matching ash */
+      clip-path: polygon(5% 0%, 95% 0%, 75% 100%, 25% 100%);
       /* Subtle paper texture and rolling lines */
       background-image: 
         repeating-linear-gradient(
@@ -538,6 +538,8 @@
   <div class="smoke-overlay smoke-bottom"></div>
 
   <div class="joint-visual">
+    <!-- Smoke Particles Canvas - positioned at top to come from ember -->
+    <canvas id="smokeCanvas" style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 400px; height: 100vh; pointer-events: none; z-index: 15; opacity: 0.5;"></canvas>
     <!-- Pure CSS joint -->
     <div class="joint">
       <div class="ash"></div>
@@ -545,8 +547,6 @@
       <div class="paper"></div>
       <div class="filter"></div>
     </div>
-    <!-- Smoke Particles Canvas - now inside joint-visual to move with it -->
-    <canvas id="smokeCanvas" style="position: absolute; left: 50%; top: 0; transform: translateX(-50%); width: 400px; height: 100vh; pointer-events: none; z-index: 5; opacity: 0.5;"></canvas>
   </div>
 
   <div class="timeline-content">
@@ -872,7 +872,7 @@
         if (this.currentopacity <= 0) {
           this.currentopacity = 1;
           this.x = smokeCanvasWidth / 2;
-          this.y = smokeCanvasHeight / 2 - 130; // Start from ember at top of joint
+          this.y = 10; // Start from top of canvas (where ember is)
           this.rotation = generateRandomSmoke(0, Math.PI * 2);
           this.radius = 25;
         }
@@ -905,7 +905,7 @@
 
     function addSmokeParticle(ctx) {
       var particle = new SmokeParticle(ctx);
-      particle.setPosition(smokeCanvasWidth / 2, smokeCanvasHeight / 2 - 130);
+      particle.setPosition(smokeCanvasWidth / 2, 10); // Start from top
       particle.setRotation(generateRandomSmoke(0, Math.PI * 2));
       particle.setVelocity(generateRandomSmoke(-.1, .1), -0.8);
       particle.setImage(smokeImg);
