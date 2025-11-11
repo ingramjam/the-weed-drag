@@ -187,7 +187,7 @@
       height: 100vh;
       display: flex;
       z-index: 10;
-      background-color: var(--color-bg);
+      background-color: transparent;
       flex-shrink: 0; /* Prevent shrinking */
       will-change: transform; /* GPU acceleration hint */
       transition: opacity 0.3s ease, filter 0.3s ease; /* Add transition for dimming */
@@ -598,9 +598,9 @@
         <path d="M0,500 C300,450 700,550 1000,520 C1150,500 1200,550 1200,550 L1200,800 L0,800 Z" fill="#303132" opacity="0.56"/>
       </svg>
     </div>
-    <!-- Middle wave -->
+    <!-- Middle wave (flipped horizontally) -->
     <div class="wave-layer wave-layer-2">
-      <svg viewBox="0 0 1200 800" preserveAspectRatio="none">
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="none" style="transform: scaleX(-1);">
         <path d="M0,250 C400,200 600,350 900,300 C1100,270 1200,350 1200,350 L1200,550 L0,550 Z" fill="#303132" opacity="0.56"/>
       </svg>
     </div>
@@ -719,10 +719,18 @@
       const waveLayers = document.querySelectorAll('.wave-layer');
       
       waveLayers.forEach((layer, index) => {
-        // Move waves apart as you scroll - each layer moves down at different speeds
-        const speed = (index + 1) * 30; // Multiplier for separation
-        const yPos = scrollPercent * speed;
-        layer.style.transform = `translate3d(0, ${yPos}vh, 0)`;
+        // Move waves apart as you scroll
+        if (index === 2) {
+          // Top wave (wave-layer-3) - moves UP as you scroll down
+          const speed = 30;
+          const yPos = -(scrollPercent * speed);
+          layer.style.transform = `translate3d(0, ${yPos}vh, 0)`;
+        } else {
+          // Bottom and middle waves - move DOWN as you scroll
+          const speed = (index + 1) * 30;
+          const yPos = scrollPercent * speed;
+          layer.style.transform = `translate3d(0, ${yPos}vh, 0)`;
+        }
       });
     }
     
