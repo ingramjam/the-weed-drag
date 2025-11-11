@@ -832,10 +832,12 @@
       if (isOverlapping) {
         jointVisual.style.opacity = '0.3';
         jointVisual.style.filter = 'brightness(0.5)';
+        jointVisual.style.zIndex = '1'; // Move joint behind CTA
         smokeCanvas.style.opacity = '0'; // Hide smoke when CTA overlaps
       } else {
         jointVisual.style.opacity = '1';
         jointVisual.style.filter = 'brightness(1)';
+        jointVisual.style.zIndex = '10'; // Restore normal z-index
         smokeCanvas.style.opacity = '0.8'; // Show smoke normally
       }
 
