@@ -84,6 +84,18 @@
       }
     }
     
+    @keyframes waveMotion {
+      0% {
+        transform: translateX(0);
+      }
+      50% {
+        transform: translateX(-5%);
+      }
+      100% {
+        transform: translateX(0);
+      }
+    }
+    
     body {
       margin: 0;
       padding: 0;
@@ -117,6 +129,9 @@
       width: 200%;
       height: 100%;
       left: -50%;
+      animation: waveMotion 20s ease-in-out infinite;
+      --scroll-offset: 0vh;
+      transform: translate3d(0, var(--scroll-offset), 0);
     }
     
     .wave-layer svg {
@@ -127,16 +142,21 @@
     .wave-layer-1 {
       top: 0%;
       opacity: 1;
+      animation-duration: 25s;
     }
     
     .wave-layer-2 {
       top: 0%;
       opacity: 1;
+      animation-duration: 30s;
+      animation-delay: -5s;
     }
     
     .wave-layer-3 {
       top: 0%;
       opacity: 1;
+      animation-duration: 35s;
+      animation-delay: -10s;
     }
     
     /* -------------------------------------
@@ -507,7 +527,7 @@
         height: 450px; /* Fixed height for desktop */
         background-color: transparent; /* No bg, just the .joint */
         border: none; /* Remove border for cleaner look */
-        box-shadow: 5px 5px 20px rgba(0, 0, 0, 0.3); 
+        box-shadow: none; 
       }
       
       .joint {
@@ -719,17 +739,17 @@
       const waveLayers = document.querySelectorAll('.wave-layer');
       
       waveLayers.forEach((layer, index) => {
-        // Move waves apart as you scroll
+        // Move waves apart as you scroll using CSS custom property
         if (index === 2) {
           // Top wave (wave-layer-3) - moves UP as you scroll down
           const speed = 30;
           const yPos = -(scrollPercent * speed);
-          layer.style.transform = `translate3d(0, ${yPos}vh, 0)`;
+          layer.style.setProperty('--scroll-offset', `${yPos}vh`);
         } else {
           // Bottom and middle waves - move DOWN as you scroll
           const speed = (index + 1) * 30;
           const yPos = scrollPercent * speed;
-          layer.style.transform = `translate3d(0, ${yPos}vh, 0)`;
+          layer.style.setProperty('--scroll-offset', `${yPos}vh`);
         }
       });
     }
