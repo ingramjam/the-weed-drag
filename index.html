@@ -22,7 +22,7 @@
       --color-border: #001a33;
       
       /* Accent Colors */
-      --color-filter: #c8a882; /* Tan/brown cardboard crutch color */
+      --color-filter: #4CAF50; /* Green filter */
       --color-ember: #FF4500; /* Bright orange-red */
       --color-ember-glow: #4CAF50; /* Green glow for ember */
       
@@ -178,8 +178,8 @@
       order: 1; /* At the top */
       border-left: 2px solid #222;
       border-right: 2px solid #222;
-      /* Taper effect - narrower at top */
-      clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+      /* Taper effect - wider at top (lit end) */
+      clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 30% 100%);
     }
     
     .ember {
@@ -192,8 +192,8 @@
       z-index: 2;
       flex-shrink: 0;
       order: 2; /* Below ash */
-      /* Taper to match ash */
-      clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+      /* Taper to match ash - wider at top */
+      clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 30% 100%);
     }
 
     .paper {
@@ -207,8 +207,8 @@
       /* Subtle shadows for depth */
       box-shadow: inset 3px 0 6px var(--color-paper-shadow),
                   inset -3px 0 6px var(--color-paper-shadow);
-      /* Conical taper - wider at bottom */
-      clip-path: polygon(30% 0%, 70% 0%, 100% 100%, 0% 100%);
+      /* Conical taper - wider at top, narrower at bottom */
+      clip-path: polygon(0% 0%, 100% 0%, 70% 100%, 30% 100%);
       /* Subtle paper texture and rolling lines */
       background-image: 
         repeating-linear-gradient(
@@ -229,17 +229,17 @@
 
     .filter {
       height: 120px; /* Taller, more prominent crutch */
-      background: linear-gradient(to bottom, #d4b896 0%, #c8a882 50%, #b89968 100%);
+      background: linear-gradient(to bottom, #5cb85c 0%, #4CAF50 50%, #45a049 100%);
       flex-shrink: 0;
       order: 4; /* At the bottom */
-      border-top: 3px solid #8d7555;
-      border-left: 2px solid #a08060;
-      border-right: 2px solid #a08060;
-      border-bottom: 2px solid #7a6040;
+      border-top: 3px solid #3d8b40;
+      border-left: 2px solid #45a049;
+      border-right: 2px solid #45a049;
+      border-bottom: 2px solid #2e7d32;
       /* Rounded bottom edges */
       border-bottom-left-radius: 4px;
       border-bottom-right-radius: 4px;
-      /* Cardboard texture with ridges */
+      /* Filter tip texture */
       background-image: 
         repeating-linear-gradient(
           0deg,
@@ -248,10 +248,10 @@
           transparent 3px,
           rgba(0,0,0,0.08) 4px
         ),
-        linear-gradient(45deg, rgba(0,0,0,0.03) 25%, transparent 25%),
-        linear-gradient(-45deg, rgba(0,0,0,0.03) 25%, transparent 25%),
-        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.03) 75%),
-        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.03) 75%);
+        linear-gradient(45deg, rgba(0,0,0,0.05) 25%, transparent 25%),
+        linear-gradient(-45deg, rgba(0,0,0,0.05) 25%, transparent 25%),
+        linear-gradient(45deg, transparent 75%, rgba(0,0,0,0.05) 75%),
+        linear-gradient(-45deg, transparent 75%, rgba(0,0,0,0.05) 75%);
       background-size: 100% 100%, 4px 4px, 4px 4px, 4px 4px, 4px 4px;
       /* Subtle shadow at top to show depth */
       box-shadow: inset 0 4px 8px rgba(0,0,0,0.15);
@@ -507,7 +507,7 @@
         height: 100px; /* Shorter filter for desktop */
         border-left: none;
         border-right: none;
-        border-top: 3px solid #8d7555;
+        border-top: 3px solid #3d8b40;
       }
       
       .timeline-content {
